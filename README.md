@@ -6,8 +6,6 @@ For license information check the [LICENSE](LICENSE)-file.
 
 [![Latest Stable Version](https://poser.pugx.org/aliyunapi/guzzle-aliyun-subscriber/v/stable.png)](https://packagist.org/packages/aliyunapi/guzzle-aliyun-subscriber)
 [![Total Downloads](https://poser.pugx.org/aliyunapi/guzzle-aliyun-subscriber/downloads.png)](https://packagist.org/packages/aliyunapi/guzzle-aliyun-subscriber)
-[![Reference Status](https://www.versioneye.com/php/aliyunapi:guzzle-aliyun-subscriber/reference_badge.svg)](https://www.versioneye.com/php/guzzle-aliyun-subscriber/references)
-
 
 Installation
 ------------
