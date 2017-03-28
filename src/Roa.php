@@ -5,11 +5,11 @@
  * @license http://www.tintsoft.com/license/
  */
 
-namespace xutl\guzzle\subscriber\aliyun;
+namespace aliyun\guzzle\subscriber;
 
 use Psr\Http\Message\RequestInterface;
 
-class Poa
+class Roa
 {
     /** @var array Configuration settings */
     private $config;

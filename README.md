@@ -15,13 +15,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist aliyunapi/guzzle-aliyun-subscriber
+php composer.phar require --prefer-dist aliyunapi/guzzle-subscriber
 ```
 
 or add
 
 ```
-"aliyunapi/guzzle-aliyun-subscriber": "~1.0"
+"aliyunapi/guzzle-subscriber": "~1.0"
 ```
 
 to the require section of your composer.json.
@@ -32,7 +32,7 @@ to the require section of your composer.json.
 ````
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
-use xutl\guzzle\subscriber\aliyun\Rpc;
+use aliyun\guzzle\subscriber\Rpc;
 
 $stack = HandlerStack::create();
 

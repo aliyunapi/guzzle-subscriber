@@ -4,13 +4,13 @@
   "keywords": [
     "aliyun",
     "aliyun sdk",
-    "aliyun"
+    "guzzle","guzzlehttp"
   ],
   "type": "library",
-  "license": "Apache",
+  "license": "MIT",
   "support": {
-    "issues": "https://github.com/aliyunapi/core/issues",
-    "source": "https://github.com/aliyunapi/core"
+    "issues": "https://github.com/aliyunapi/guzzle-aliyun-subscriber/issues",
+    "source": "https://github.com/aliyunapi/guzzle-aliyun-subscriber"
   },
   "authors": [
     {
@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "xutl\\guzzle\\subscriber\\aliyun\\": "src"
+      "aliyun\\guzzle\\subscriber\\": "src"
     }
   }
 }
