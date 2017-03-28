@@ -32,22 +32,26 @@ to the require section of your composer.json.
 使用
 ------------
 ````
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use xutl\guzzle\subscriber\aliyun\Rpc;
+
 $stack = HandlerStack::create();
 
 //跟guzzlephp普通用法唯一的区别就是这里吧中间件加载进来，他会自动帮你签名重新包装请求参数。
-$middleware = new \xutl\guzzle\subscriber\aliyun\Rpc([
+$middleware = new Rpc([
     'accessKeyId' => '123456',
     'accessSecret' => '654321',
 ]);
 $stack->push($middleware);
 
-//这里设置 网关地址，数组参数请参见 http://docs.guzzlephp.org/en/latest/request-options.html
-$client = new \GuzzleHttp\Client([
+//这里设置 网关地址，数组参数请参见 http://docs.guzzlephp.org/en/latest/request-options.html 操作哪个接口对应的 base_uri 就写哪个
+$client = new Client([
     'base_uri' => 'http://live.aliyuncs.com/',
     'handler' => $stack,
 ]);
 
-//查询参数  https://help.aliyun.com/document_detail/35412.html 这个页面列出了几个参数就在数组提交几个参数
+//查询参数  https://help.aliyun.com/document_detail/35412.html 这个页面列出了几个参数就在数组提交几个参数,其他的API接口也一样，只需对应参数给他提交即可。
 $res = $client->get('/', [
     'query' => [
         'Action' => 'DescribeLiveStreamOnlineUserNum',
