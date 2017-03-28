@@ -4,8 +4,8 @@
 
 For license information check the [LICENSE](LICENSE)-file.
 
-[![Latest Stable Version](https://poser.pugx.org/aliyunapi/guzzle-aliyun-subscriber/v/stable.png)](https://packagist.org/packages/aliyunapi/guzzle-aliyun-subscriber)
-[![Total Downloads](https://poser.pugx.org/aliyunapi/guzzle-aliyun-subscriber/downloads.png)](https://packagist.org/packages/aliyunapi/guzzle-aliyun-subscriber)
+[![Latest Stable Version](https://poser.pugx.org/aliyunapi/guzzle-subscriber/v/stable.png)](https://packagist.org/packages/aliyunapi/guzzle-subscriber)
+[![Total Downloads](https://poser.pugx.org/aliyunapi/guzzle-subscriber/downloads.png)](https://packagist.org/packages/aliyunapi/guzzle-subscriber)
 
 Installation
 ------------
