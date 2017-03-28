@@ -1,0 +1,31 @@
+{
+  "name": "aliyunapi/guzzle-aliyun-subscriber",
+  "description": "aliyunsdk",
+  "keywords": [
+    "aliyun",
+    "aliyun sdk",
+    "aliyun"
+  ],
+  "type": "library",
+  "license": "Apache",
+  "support": {
+    "issues": "https://github.com/aliyunapi/core/issues",
+    "source": "https://github.com/aliyunapi/core"
+  },
+  "authors": [
+    {
+      "name": "Xu TL",
+      "email": "xutongle@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "guzzlehttp/psr7": "~1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "xutl\\guzzle\\subscriber\\aliyun\\": "src"
+    }
+  }
+}
