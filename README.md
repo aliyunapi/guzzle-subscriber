@@ -1,7 +1,6 @@
 # aliyun-guzzle
 
-鉴于官方API过度设计，所以这个中间件是 GuzzleHttp 专用的，支持阿里云大部分API请求。
-
+鉴于官方SDK过度设计，所以这个中间件是 GuzzleHttp 专用的，支持阿里云大部分API请求。不支持的只要是原SDK中基于ROA的那部分没做。有需要的自行扩展。
 For license information check the [LICENSE](LICENSE)-file.
 
 [![Latest Stable Version](https://poser.pugx.org/aliyunapi/guzzle-subscriber/v/stable.png)](https://packagist.org/packages/aliyunapi/guzzle-subscriber)
