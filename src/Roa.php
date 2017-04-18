@@ -112,6 +112,11 @@ class Roa
         return $request;
     }
 
+    /**
+     * 构建规范Headers
+     * @param array $headers
+     * @return string
+     */
     private function buildCanonicalHeaders($headers)
     {
         $sortMap = [];
