@@ -24,7 +24,7 @@ class Roa
             'accessSecret' => '654321',
             'signatureMethod' => 'HMAC-SHA1',
             'signatureVersion' => '1.0',
-            'dateTimeFormat' => 'Y-m-d\TH:i:s\Z',
+            'dateTimeFormat' => 'D, d M Y H:i:s \G\M\T',
         ];
         foreach ($config as $key => $value) {
             $this->config[$key] = $value;
@@ -55,21 +55,24 @@ class Roa
     {
         $headers = $request->getHeaders();
 
+        //prepare Header
         $headers["Date"] = gmdate($this->config['dateTimeFormat']);
         $headers["Accept"] = 'application/octet-stream';
         $headers["x-acs-signature-method"] = $this->config['signatureMethod'];
         $headers["x-acs-signature-version"] = $this->config['signatureVersion'];
+        $headers['x-acs-version'] = $this->config['Version'];
 
-        if(isset($this->config['regionId'])){
+        if (isset($this->config['regionId'])) {
             $headers["x-acs-region-id"] = $this->config['regionId'];
         }
 
         $content = $request->getBody()->getContents();
         if ($content != null) {
-            $headers["Content-MD5"] = base64_encode(md5(json_encode($content),true));
+            $headers["Content-MD5"] = base64_encode(md5(json_encode($content), true));
         }
         $headers["Content-Type"] = "application/octet-stream;charset=utf-8";
 
+        //compose Url
 
         $signString = $request->getMethod() . self::$headerSeparator;
         if (isset($headers["Accept"])) {
@@ -92,19 +95,37 @@ class Roa
         }
         $signString = $signString . self::$headerSeparator;
 
+        $params = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+        $signString = $signString . $this->buildCanonicalHeaders($headers);
+        ksort($params);//参数排序
+        $query = \GuzzleHttp\Psr7\build_query($params);
+        $signString .= $query;
 
-        //etc....
+        $headers["Authorization"] = "acs " . $this->config['accessKeyId'] . ":"
+            . base64_encode(hash_hmac('sha1', $signString, $this->config['accessSecret'], true));
+
+        /** @var RequestInterface $request */
+        $request = $request->withUri($request->getUri()->withQuery($query));
+        foreach ($headers as $name => $val) {
+            $request->withHeader($name, $val);
+        }
         return $request;
-        $uri = $this->replaceOccupiedParameters();
-        $signString = $signString.$this->buildCanonicalHeaders();
-        $queryString = $this->buildQueryString($uri);
-        $signString .= $queryString;
+    }
 
-        $requestUrl = $request->getProtocol()."://".$domain.$queryString;
-        return $requestUrl;
-
-        $request = $request->withHeader('Authorization', "acs ".$this->config['accessKeyId'].":"
-            .$iSigner->signString($signString, $this->config['accessSecret']));
-        return $request;
+    private function buildCanonicalHeaders($headers)
+    {
+        $sortMap = [];
+        foreach ($headers as $headerKey => $headerValue) {
+            $key = strtolower($headerKey);
+            if (strpos($key, "x-acs-") === 0) {
+                $sortMap[$key] = $headerValue;
+            }
+        }
+        ksort($sortMap);
+        $headerString = "";
+        foreach ($sortMap as $sortMapKey => $sortMapValue) {
+            $headerString = $headerString . $sortMapKey . ":" . $sortMapValue . self::$headerSeparator;
+        }
+        return $headerString;
     }
 }
