@@ -25,7 +25,6 @@ or add
 
 to the require section of your composer.json.
 
-
 使用
 ------------
 ````
@@ -59,4 +58,33 @@ $res = $client->get('/', [
 ]);
 
 print_r($res->getBody()->getContents());
+
+////////////////////////////////////////////////////////////////////ROA已经实现了，但是没有条件测试，欢迎提交合并
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use aliyun\guzzle\subscriber\Roa;
+
+$stack = HandlerStack::create();
+
+//跟guzzlephp普通用法唯一的区别就是这里吧中间件加载进来，他会自动帮你签名重新包装请求参数。
+$middleware = new Rpc([
+    'accessKeyId' => '123456',
+    'accessSecret' => '654321',
+    'version'=>'123456',
+]);
+$stack->push($middleware);
+
+$client = new Client([
+    'base_uri' => 'http://cs.aliyuncs.com/',
+    'handler' => $stack,
+]);
+
+$res = $client->get('/', [
+    'query' => [
+        //etc
+        ]
+]);
+
+print_r($res->getBody()->getContents());
 ````
+
