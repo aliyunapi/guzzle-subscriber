@@ -59,6 +59,9 @@ class Rpc
         $params['Timestamp'] = gmdate($this->config['dateTimeFormat']);
         $params['SignatureVersion'] = $this->config['signatureVersion'];
         $params['SignatureNonce'] = uniqid();
+        if (isset($this->config['regionId']) && !empty($this->config['regionId'])) {//有些接口需要区域ID
+            $params['RegionId'] = $this->config['regionId'];
+        }
 
         //签名
         $params['Signature'] = $this->getSignature($request, $params);
