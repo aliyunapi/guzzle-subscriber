@@ -12,22 +12,23 @@ use Psr\Http\Message\RequestInterface;
 class Roa
 {
     /** @var array Configuration settings */
-    private $config;
+    private $config = [
+        'Version' => '2016-11-01',
+        'accessKeyId' => '123456',
+        'accessSecret' => '654321',
+        'signatureMethod' => 'HMAC-SHA1',
+        'signatureVersion' => '1.0',
+        'dateTimeFormat' => 'D, d M Y H:i:s \G\M\T',
+    ];
 
     private static $headerSeparator = "\n";
 
     public function __construct($config)
     {
-        $this->config = [
-            'Version' => '2016-11-01',
-            'accessKeyId' => '123456',
-            'accessSecret' => '654321',
-            'signatureMethod' => 'HMAC-SHA1',
-            'signatureVersion' => '1.0',
-            'dateTimeFormat' => 'D, d M Y H:i:s \G\M\T',
-        ];
-        foreach ($config as $key => $value) {
-            $this->config[$key] = $value;
+        if (!empty($config)) {
+            foreach ($config as $key => $value) {
+                $this->config[$key] = $value;
+            }
         }
     }
 

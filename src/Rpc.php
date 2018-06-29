@@ -12,20 +12,21 @@ use Psr\Http\Message\RequestInterface;
 class Rpc
 {
     /** @var array Configuration settings */
-    private $config;
+    private $config = [
+        'Version' => '2016-11-01',
+        'accessKeyId' => '123456',
+        'accessSecret' => '654321',
+        'signatureMethod' => 'HMAC-SHA1',
+        'signatureVersion' => '1.0',
+        'dateTimeFormat' => 'Y-m-d\TH:i:s\Z',
+    ];
 
     public function __construct($config)
     {
-        $this->config = [
-            'Version' => '2016-11-01',
-            'accessKeyId' => '123456',
-            'accessSecret' => '654321',
-            'signatureMethod' => 'HMAC-SHA1',
-            'signatureVersion' => '1.0',
-            'dateTimeFormat' => 'Y-m-d\TH:i:s\Z',
-        ];
-        foreach ($config as $key => $value) {
-            $this->config[$key] = $value;
+        if (!empty($config)) {
+            foreach ($config as $key => $value) {
+                $this->config[$key] = $value;
+            }
         }
     }
 
