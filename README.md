@@ -67,7 +67,7 @@ use aliyun\guzzle\subscriber\Roa;
 $stack = HandlerStack::create();
 
 //跟guzzlephp普通用法唯一的区别就是这里吧中间件加载进来，他会自动帮你签名重新包装请求参数。
-$middleware = new Rpc([
+$middleware = new Roa([
     'accessKeyId' => '123456',
     'accessSecret' => '654321',
     'version'=>'123456',
