@@ -71,10 +71,11 @@ class Rpc
         }
         //签名
         $params['Signature'] = $this->getSignature($request, $params);
+        $body = http_build_query($params, '', '&');
         if ($request->getMethod() == 'POST') {
-            $request = \GuzzleHttp\Psr7\modify_request($request, ['body' => http_build_query($params, '', '&')]);
+            $request = \GuzzleHttp\Psr7\modify_request($request, ['body' => $body]);
         } else {
-            $request = \GuzzleHttp\Psr7\modify_request($request, ['query' => $params]);
+            $request = \GuzzleHttp\Psr7\modify_request($request, ['query' => $body]);
         }
         return $request;
     }
