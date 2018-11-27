@@ -52,7 +52,13 @@ class Rpc
      */
     private function onBefore(RequestInterface $request)
     {
-        $params = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+        if ($request->getMethod() == 'POST') {
+            $params = [];
+            parse_str($request->getBody()->getContents(), $params);
+        } else {
+            $params = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+        }
+
         $params['Version'] = $this->config['Version'];
         $params['Format'] = 'JSON';
         $params['AccessKeyId'] = $this->config['accessKeyId'];
@@ -63,12 +69,13 @@ class Rpc
         if (isset($this->config['regionId']) && !empty($this->config['regionId'])) {//有些接口需要区域ID
             $params['RegionId'] = $this->config['regionId'];
         }
-
         //签名
         $params['Signature'] = $this->getSignature($request, $params);
-        $query = \GuzzleHttp\Psr7\build_query($params);
-        /** @var RequestInterface $request */
-        $request = $request->withUri($request->getUri()->withQuery($query));
+        if ($request->getMethod() == 'POST') {
+            $request = \GuzzleHttp\Psr7\modify_request($request, ['body' => http_build_query($params, '', '&')]);
+        } else {
+            $request = \GuzzleHttp\Psr7\modify_request($request, ['query' => $params]);
+        }
         return $request;
     }
 
