@@ -56,7 +56,7 @@ class Rpc
             $params = [];
             parse_str($request->getBody()->getContents(), $params);
         } else {
-            $params = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+            $params = \GuzzleHttp\Psr7\Query::parse($request->getUri()->getQuery());
         }
 
         $params['Version'] = $this->config['Version'];
@@ -73,9 +73,9 @@ class Rpc
         $params['Signature'] = $this->getSignature($request, $params);
         $body = http_build_query($params, '', '&');
         if ($request->getMethod() == 'POST') {
-            $request = \GuzzleHttp\Psr7\modify_request($request, ['body' => $body]);
+            $request = \GuzzleHttp\Psr7\Utils::modifyRequest($request, ['body' => $body]);
         } else {
-            $request = \GuzzleHttp\Psr7\modify_request($request, ['query' => $body]);
+            $request = \GuzzleHttp\Psr7\Utils::modifyRequest($request, ['query' => $body]);
         }
         return $request;
     }

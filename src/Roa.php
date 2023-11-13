@@ -96,10 +96,10 @@ class Roa
         }
         $signString = $signString . self::$headerSeparator;
 
-        $params = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+        $params = \GuzzleHttp\Psr7\Query::parse($request->getUri()->getQuery());
         $signString = $signString . $this->buildCanonicalHeaders($headers);
         ksort($params);//参数排序
-        $query = \GuzzleHttp\Psr7\build_query($params);
+        $query = \GuzzleHttp\Psr7\Query::build($params);
         $signString .= $query;
 
         $headers["Authorization"] = "acs " . $this->config['accessKeyId'] . ":"
@@ -118,7 +118,7 @@ class Roa
      * @param array $headers
      * @return string
      */
-    private function buildCanonicalHeaders($headers)
+    private function buildCanonicalHeaders($headers): string
     {
         $sortMap = [];
         foreach ($headers as $headerKey => $headerValue) {
